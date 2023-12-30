@@ -2,5 +2,5 @@
 
 public interface INavigationDataReceiver<TDto>
 {
-    void ReceiveFromNavigation(TDto dto);
+    void OnReceiveParameterFromNavigation(TDto dto);
 }

@@ -2,34 +2,18 @@
 
 namespace RKCheckList.Controls;
 
-internal class NavigationViewService : ViewServiceBase, INavigationViewService
+internal class NavigationViewService(NavigationControl navigationControl) : ViewServiceBase, INavigationViewService
 {
-    private readonly NavigationControl _navigationControl;
-
-    public NavigationViewService(NavigationControl navigationControl)
+    /// <inheritdoc />
+    public void NavigateTo<TViewModel, TNavigationArgument>(TNavigationArgument argument) 
+        where TViewModel : INavigationTarget, INavigationDataReceiver<TNavigationArgument>
     {
-        _navigationControl = navigationControl;
+        navigationControl.NavigateTo<TViewModel, TNavigationArgument>(argument);
     }
 
     /// <inheritdoc />
-    public void NavigateTo(string targetName)
+    public void NavigateTo<TViewModel>() where TViewModel : INavigationTarget
     {
-        _navigationControl.NavigateTo(targetName);
-    }
-
-    public void NavigateTo<TDto>(string targetName, TDto dto)
-    {
-        _navigationControl.NavigateTo(targetName, dto);
-    }
-
-    /// <inheritdoc />
-    public bool TryNavigateTo(string targetName)
-    {
-        return _navigationControl.TryNavigateTo(targetName);
-    }
-
-    public bool TryNavigateTo<TDto>(string targetName, TDto dto)
-    {
-        return _navigationControl.TryNavigateTo(targetName, dto);
+        navigationControl.NavigateTo<TViewModel>();
     }
 }

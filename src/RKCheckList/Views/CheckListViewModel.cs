@@ -1,17 +1,24 @@
 ﻿using System.Collections.ObjectModel;
+using Avalonia.Controls;
 using RKCheckList.Controls;
 using RKCheckList.Model;
 using RKCheckList.Util;
 
 namespace RKCheckList.Views;
 
-public class CheckListViewModel : OwnViewModelBase, INavigationDataReceiver<CheckListModel>
+public class CheckListViewModel : OwnViewModelBase, INavigationTarget, INavigationDataReceiver<CheckListModel>
 {
     public static CheckListViewModel DesignViewModel => new ();
 
     public ObservableCollection<CheckListItemViewModel> Items { get; } = new ();
 
-    public void ReceiveFromNavigation(CheckListModel dto)
+    /// <inheritdoc />
+    public static Control CreateViewInstance()
+    {
+        return new CheckListView();
+    }
+    
+    public void OnReceiveParameterFromNavigation(CheckListModel dto)
     {
         this.Items.Clear();
 

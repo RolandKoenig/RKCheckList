@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:RKCheckList.Controls"
-        xmlns:views="clr-namespace:RKCheckList.Views"
         xmlns:local="clr-namespace:RKCheckList"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="RKCheckList.MainWindow"
@@ -27,14 +26,7 @@
         </ext:MainWindowFrame.CustomTitleArea>
         
         <ext:MainWindowFrame.MainContentArea>
-            <controls:NavigationControl InitialViewName="Home">
-                <controls:NavigationControl.NavigationItems>
-                    <controls:NavigationItem Name="Home"
-                                             ViewType="{x:Type views:HomeView}" />
-                    <controls:NavigationItem Name="CheckList"
-                                             ViewType="{x:Type views:CheckListView}" />
-                </controls:NavigationControl.NavigationItems>
-            </controls:NavigationControl>
+            <controls:NavigationControl x:Name="CtrlNavigation" />
         </ext:MainWindowFrame.MainContentArea>
         
     </ext:MainWindowFrame>

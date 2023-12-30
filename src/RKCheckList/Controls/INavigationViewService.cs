@@ -2,11 +2,9 @@
 
 public interface INavigationViewService
 {
-    void NavigateTo(string targetName);
+    void NavigateTo<TViewModel>()
+        where TViewModel : INavigationTarget;
 
-    void NavigateTo<TDto>(string targetName, TDto dto);
-
-    bool TryNavigateTo(string targetName);
-
-    bool TryNavigateTo<TDto>(string targetName, TDto dto);
+    void NavigateTo<TViewModel, TNavigationArgument>(TNavigationArgument argument)
+        where TViewModel : INavigationTarget, INavigationDataReceiver<TNavigationArgument>;
 }

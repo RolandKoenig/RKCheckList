@@ -1,17 +1,25 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
+using Avalonia.Controls;
 using CommunityToolkit.Mvvm.Input;
 using RKCheckList.Controls;
 using RKCheckList.Model;
 using RKCheckList.Util;
 using RolandK.AvaloniaExtensions.ViewServices;
+using FileDialogFilter = RolandK.AvaloniaExtensions.ViewServices.FileDialogFilter;
 
 namespace RKCheckList.Views;
 
-public partial class HomeViewModel : OwnViewModelBase
+public partial class HomeViewModel : OwnViewModelBase, INavigationTarget
 {
     public static HomeViewModel DesignViewModel => new HomeViewModel();
 
+    /// <inheritdoc />
+    public static Control CreateViewInstance()
+    {
+        return new HomeView();
+    }
+    
     [RelayCommand]
     private async Task LoadCheckListFileAsync()
     {
@@ -31,6 +39,6 @@ public partial class HomeViewModel : OwnViewModelBase
         var checkList = await CheckListModel.FromYamlAsync(streamReader);
         
         var srvNavigation = this.GetViewService<INavigationViewService>();
-        srvNavigation.NavigateTo("CheckList", checkList);
+        srvNavigation.NavigateTo<CheckListViewModel, CheckListModel>(checkList);
     }
 }

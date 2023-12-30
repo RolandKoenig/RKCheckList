@@ -1,7 +1,9 @@
+using RKCheckList.Controls;
 using RKCheckList.ViewServices;
 using RolandK.AvaloniaExtensions.Mvvm.Markup;
 
 namespace RKCheckList;
+
 public partial class MainWindow : MvvmWindow
 {
     public MainWindow()
@@ -9,5 +11,6 @@ public partial class MainWindow : MvvmWindow
         this.InitializeComponent();
         
         this.ViewServices.Add(new DependencyInjectionViewService(this));
+        this.ViewServices.Add(new NavigationViewService(this.CtrlNavigation));
     }
 }

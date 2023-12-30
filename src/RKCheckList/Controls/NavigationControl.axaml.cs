@@ -1,99 +1,43 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Avalonia.Controls;
-using Avalonia.LogicalTree;
-using Avalonia.Threading;
+using Microsoft.Extensions.DependencyInjection;
+using RolandK.AvaloniaExtensions.DependencyInjection;
 using RolandK.AvaloniaExtensions.Mvvm.Markup;
 
 namespace RKCheckList.Controls;
 
 public partial class NavigationControl : ViewServiceHostUserControl
 {
-    public List<NavigationItem> NavigationItems { get; } = new List<NavigationItem>();
-
     public string InitialViewName { get; set; } = string.Empty;
 
     public NavigationControl()
     {
-        this.ViewServices.Add(new NavigationViewService(this));
-
         this.InitializeComponent();
     }
 
-    public void NavigateTo(string targetName)
+    public void NavigateTo<TViewModel, TNavigationArgument>(TNavigationArgument argument)
+        where TViewModel : INavigationTarget, INavigationDataReceiver<TNavigationArgument>
     {
-        if (!this.TryNavigateTo(targetName))
-        {
-            throw new ArgumentException($"Unable to navigate to '{targetName}'!");
-        }
+        var serviceProvider = this.GetServiceProvider();
+        var viewModel = serviceProvider.GetRequiredService<TViewModel>();
+        viewModel.OnReceiveParameterFromNavigation(argument);
+        
+        var viewObject = TViewModel.CreateViewInstance();
+        viewObject.DataContext = viewModel;
+        
+        this.CtrlTransition.Content = viewObject;
     }
-
-    public void NavigateTo<TDto>(string targetName, TDto dto)
+    
+    public void NavigateTo<TViewModel>()
+        where TViewModel : INavigationTarget
     {
-        if (!this.TryNavigateTo(targetName, dto))
-        {
-            throw new ArgumentException($"Unable to navigate to '{targetName}'!");
-        }
-    }
-
-    /// <summary>
-    /// Navigates to the Control with the given name.
-    /// </summary>
-    public bool TryNavigateTo(string targetName)
-    {
-        var navigationTarget = this.NavigationItems.FirstOrDefault(
-            x => x.Name.Equals(targetName, StringComparison.OrdinalIgnoreCase));
-        if ((navigationTarget == null) ||
-            (navigationTarget.ViewType == null))
-        {
-            return false;
-        }
-
-        var viewObject = Activator.CreateInstance(navigationTarget.ViewType);
-        if (viewObject is not Control viewObjectControl)
-        {
-            return false;
-        }
-
-        this.CtrlTransition.Content = viewObjectControl;
-        return true;
-    }
-
-    /// <summary>
-    /// Navigates to the Control with the given name.
-    /// </summary>
-    public bool TryNavigateTo<TDto>(string targetName, TDto dto)
-    {
-        var result = TryNavigateTo(targetName);
-        if (!result)
-        {
-            return false;
-        }
-
-        if ((this.CtrlTransition.Content is Control currentControl) &&
-            (currentControl.DataContext is INavigationDataReceiver<TDto> navDataReceiver))
-        {
-            navDataReceiver.ReceiveFromNavigation(dto);
-        }
-
-        return true;
-    }
-
-    private void TriggerInitialNavigation()
-    {
-        if (this.CtrlTransition.Content != null) { return; }
-        if (string.IsNullOrEmpty(this.InitialViewName)) { return; }
-
-        this.TryNavigateTo(this.InitialViewName);
-    }
-
-    /// <inheritdoc />
-    protected override void OnAttachedToLogicalTree(LogicalTreeAttachmentEventArgs e)
-    {
-        base.OnAttachedToLogicalTree(e);
-
-        // Trigger update of this control's state
-        Dispatcher.UIThread.Post(this.TriggerInitialNavigation);
+        var serviceProvider = this.GetServiceProvider();
+        var viewModel = serviceProvider.GetRequiredService<TViewModel>();
+        
+        var viewObject = TViewModel.CreateViewInstance();
+        viewObject.DataContext = viewModel;
+        
+        this.CtrlTransition.Content = viewObject;
     }
 }

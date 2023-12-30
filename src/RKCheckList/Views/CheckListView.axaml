@@ -6,7 +6,6 @@
              xmlns:local="clr-namespace:RKCheckList.Views"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="RKCheckList.Views.CheckListView"
-             DataContext="{ext:CreateUsingDependencyInjection {x:Type local:CheckListViewModel}}"
              d:DataContext="{x:Static local:CheckListViewModel.DesignViewModel}">
     <Panel>
         <ListBox ItemsSource="{Binding Path=Items}"
@@ -24,7 +23,5 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-
     </Panel>
-
 </ext:MvvmUserControl>
