@@ -29,7 +29,7 @@ public partial class HomeViewModel : OwnViewModelBase
 
         using var streamReader = new StreamReader(fileToOpen);
         var checkList = await CheckListModel.FromYamlAsync(streamReader);
-
+        
         var srvNavigation = this.GetViewService<INavigationViewService>();
         srvNavigation.NavigateTo("CheckList", checkList);
     }

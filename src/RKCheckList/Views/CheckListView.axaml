@@ -9,8 +9,6 @@
              DataContext="{ext:CreateUsingDependencyInjection {x:Type local:CheckListViewModel}}"
              d:DataContext="{x:Static local:CheckListViewModel.DesignViewModel}">
     <Panel>
-        <ExperimentalAcrylicBorder Material="{DynamicResource AppAcrylicMaterial}"/>
-
         <ListBox ItemsSource="{Binding Path=Items}"
                  Background="Transparent"
                  Margin="20">

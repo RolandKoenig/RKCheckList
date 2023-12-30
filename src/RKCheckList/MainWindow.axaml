@@ -14,8 +14,18 @@
         d:DataContext="{x:Static local:MainWindowViewModel.DesignViewModel}"
         Title="RK CheckList"
         Background="Transparent">
-
+    
     <ext:MainWindowFrame>
+        
+        <ext:MainWindowFrame.FullBackgroundArea>
+            <ExperimentalAcrylicBorder Material="{DynamicResource AppAcrylicMaterial}"/>
+        </ext:MainWindowFrame.FullBackgroundArea>
+        
+        <ext:MainWindowFrame.CustomTitleArea>
+            <TextBlock Text="RK CheckList"
+                       HorizontalAlignment="Center"/>
+        </ext:MainWindowFrame.CustomTitleArea>
+        
         <ext:MainWindowFrame.MainContentArea>
             <controls:NavigationControl InitialViewName="Home">
                 <controls:NavigationControl.NavigationItems>
@@ -26,5 +36,6 @@
                 </controls:NavigationControl.NavigationItems>
             </controls:NavigationControl>
         </ext:MainWindowFrame.MainContentArea>
+        
     </ext:MainWindowFrame>
 </ext:MvvmWindow>

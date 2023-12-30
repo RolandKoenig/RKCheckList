@@ -9,8 +9,6 @@
              DataContext="{ext:CreateUsingDependencyInjection {x:Type local:HomeViewModel}}"
              d:DataContext="{x:Static local:HomeViewModel.DesignViewModel}">
     <Panel>
-        <ExperimentalAcrylicBorder Material="{DynamicResource AppAcrylicMaterial}"/>
-
         <Button VerticalAlignment="Center" HorizontalAlignment="Center"
                 Content="Load"
                 Command="{Binding Path=LoadCheckListFileCommand}">
