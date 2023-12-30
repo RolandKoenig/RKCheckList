@@ -1,0 +1,30 @@
+<ext:MvvmWindow xmlns="https://github.com/avaloniaui"
+        xmlns:ext="https://github.com/RolandK.AvaloniaExtensions"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:RKCheckList.Controls"
+        xmlns:views="clr-namespace:RKCheckList.Views"
+        xmlns:local="clr-namespace:RKCheckList"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="RKCheckList.MainWindow"
+        ExtendClientAreaToDecorationsHint="True"
+        TransparencyLevelHint="AcrylicBlur"
+        DataContext="{ext:CreateUsingDependencyInjection {x:Type local:MainWindowViewModel}}"
+        d:DataContext="{x:Static local:MainWindowViewModel.DesignViewModel}"
+        Title="RK CheckList"
+        Background="Transparent">
+
+    <ext:MainWindowFrame>
+        <ext:MainWindowFrame.MainContentArea>
+            <controls:NavigationControl InitialViewName="Home">
+                <controls:NavigationControl.NavigationItems>
+                    <controls:NavigationItem Name="Home"
+                                             ViewType="{x:Type views:HomeView}" />
+                    <controls:NavigationItem Name="CheckList"
+                                             ViewType="{x:Type views:CheckListView}" />
+                </controls:NavigationControl.NavigationItems>
+            </controls:NavigationControl>
+        </ext:MainWindowFrame.MainContentArea>
+    </ext:MainWindowFrame>
+</ext:MvvmWindow>

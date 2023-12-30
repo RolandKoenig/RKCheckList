@@ -1,0 +1,30 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="RKCheckList.App"
+             RequestedThemeVariant="Default">
+
+    <Application.Styles>
+        <FluentTheme />
+    </Application.Styles>
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key='Light'>
+                    <ExperimentalAcrylicMaterial x:Key="AppAcrylicMaterial"
+                                                 BackgroundSource="Digger"
+                                                 TintColor="WhiteSmoke"
+                                                 TintOpacity="0.9"
+                                                 MaterialOpacity="0.7" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key='Dark'>
+                    <ExperimentalAcrylicMaterial x:Key="AppAcrylicMaterial"
+                                                 BackgroundSource="Digger"
+                                                 TintColor="Black"
+                                                 TintOpacity="0.9"
+                                                 MaterialOpacity="0.7" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

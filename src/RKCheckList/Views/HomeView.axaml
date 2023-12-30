@@ -1,0 +1,22 @@
+<ext:MvvmUserControl xmlns="https://github.com/avaloniaui"
+             xmlns:ext="https://github.com/RolandK.AvaloniaExtensions"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:RKCheckList.Views"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="RKCheckList.Views.HomeView"
+             DataContext="{ext:CreateUsingDependencyInjection {x:Type local:HomeViewModel}}"
+             d:DataContext="{x:Static local:HomeViewModel.DesignViewModel}">
+    <Panel>
+        <ExperimentalAcrylicBorder Material="{DynamicResource AppAcrylicMaterial}"/>
+
+        <Button VerticalAlignment="Center" HorizontalAlignment="Center"
+                Content="Load"
+                Command="{Binding Path=LoadCheckListFileCommand}">
+            <Button.RenderTransform>
+                <ScaleTransform ScaleX="6" ScaleY="6" />
+            </Button.RenderTransform>
+        </Button>
+    </Panel>
+</ext:MvvmUserControl>

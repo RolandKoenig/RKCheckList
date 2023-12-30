@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RKCheckList", "src\RKCheckList\RKCheckList.csproj", "{675642DB-47F7-4D0C-8E97-4DCFAEA9B20C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RKCheckList.Tests", "src\RKCheckList.Tests\RKCheckList.Tests.csproj", "{AF4239BE-23F6-425C-B854-68AC6ED056EA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{675642DB-47F7-4D0C-8E97-4DCFAEA9B20C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{675642DB-47F7-4D0C-8E97-4DCFAEA9B20C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{675642DB-47F7-4D0C-8E97-4DCFAEA9B20C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{675642DB-47F7-4D0C-8E97-4DCFAEA9B20C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF4239BE-23F6-425C-B854-68AC6ED056EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF4239BE-23F6-425C-B854-68AC6ED056EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF4239BE-23F6-425C-B854-68AC6ED056EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF4239BE-23F6-425C-B854-68AC6ED056EA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {67FF7802-0C06-483C-AE47-032952521AB7}
+	EndGlobalSection
+EndGlobal
