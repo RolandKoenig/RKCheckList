@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Reflection;
+using System.Text;
 using CommunityToolkit.Mvvm.Input;
 using RKCheckList.Controls;
 using RKCheckList.Model;
@@ -17,6 +19,24 @@ public partial class MainWindowViewModel : OwnViewModelBase
 
     public static MainWindowViewModel DesignViewModel => new MainWindowViewModel(
         new RKCheckListArgumentsParser(Array.Empty<string>()));
+
+    public string Title
+    {
+        get
+        {
+            var strBuilder = new StringBuilder(64);
+            strBuilder.Append("RK CheckList");
+
+            var version = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version;
+            if (!string.IsNullOrEmpty(version))
+            {
+                strBuilder.Append(' ');
+                strBuilder.Append(version);
+            }
+
+            return strBuilder.ToString();
+        }
+    }
 
     public MainWindowViewModel(IRKCheckListArgumentParser rkCheckListArgumentParser)
     {

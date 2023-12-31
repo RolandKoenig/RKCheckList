@@ -12,7 +12,7 @@
         ViewFor="{x:Type local:MainWindowViewModel}"
         DataContext="{ext:CreateUsingDependencyInjection {x:Type local:MainWindowViewModel}}"
         d:DataContext="{x:Static local:MainWindowViewModel.DesignViewModel}"
-        Title="RK CheckList"
+        Title="{Binding Path=Title}"
         Icon="Assets/RKCheckList.ico"
         Background="Transparent">
     
@@ -29,7 +29,7 @@
                     <SvgImage Source="Assets/RKCheckList.svg" />
                 </Image.Source>
             </Image>
-            <TextBlock Text="RK CheckList"
+            <TextBlock Text="{Binding Path=Title}"
                        VerticalAlignment="Center"/>
         </ext:MainWindowFrame.CustomTitleArea>
         
