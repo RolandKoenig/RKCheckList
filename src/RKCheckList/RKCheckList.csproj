@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Assets\RKCheckList.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,5 +19,11 @@
     <PackageReference Include="RolandK.AvaloniaExtensions" Version="2.0.1-preview3" />
     <PackageReference Include="RolandK.AvaloniaExtensions.DependencyInjection" Version="2.0.1-preview3" />
     <PackageReference Include="YamlDotNet" Version="13.7.1" />
+    <PackageReference Include="Avalonia.Svg.Skia" Version="11.0.0.9" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\RKCheckList.ico" />
+    <AvaloniaResource Include="Assets\RKCheckList.svg" />
   </ItemGroup>
 </Project>

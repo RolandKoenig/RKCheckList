@@ -50,7 +50,7 @@ public partial class MainWindowViewModel : OwnViewModelBase
     }
 
     /// <inheritdoc />
-    protected override async void OnAssociatedViewChanged(object? associatedView)
+    protected override void OnAssociatedViewChanged(object? associatedView)
     {
         if (associatedView == null) { return; }
 

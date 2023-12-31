@@ -13,6 +13,7 @@
         DataContext="{ext:CreateUsingDependencyInjection {x:Type local:MainWindowViewModel}}"
         d:DataContext="{x:Static local:MainWindowViewModel.DesignViewModel}"
         Title="RK CheckList"
+        Icon="Assets/RKCheckList.ico"
         Background="Transparent">
     
     <ext:MainWindowFrame>
@@ -22,8 +23,14 @@
         </ext:MainWindowFrame.FullBackgroundArea>
         
         <ext:MainWindowFrame.CustomTitleArea>
+            <Image Margin="0,6,6,6"
+                   VerticalAlignment="Center">
+                <Image.Source>
+                    <SvgImage Source="Assets/RKCheckList.svg" />
+                </Image.Source>
+            </Image>
             <TextBlock Text="RK CheckList"
-                       HorizontalAlignment="Center"/>
+                       VerticalAlignment="Center"/>
         </ext:MainWindowFrame.CustomTitleArea>
         
         <ext:MainWindowFrame.MainContentArea>
