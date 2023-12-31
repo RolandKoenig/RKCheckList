@@ -1,4 +1,4 @@
-﻿using System.IO;
+﻿using System;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.Input;
@@ -24,6 +24,10 @@ public partial class HomeViewModel : OwnViewModelBase, INavigationTarget
     private async Task LoadCheckListFileAsync()
     {
         var srvOpenFile = this.GetViewService<IOpenFileViewService>();
+        var srvNavigation = this.GetViewService<INavigationViewService>();
+        var srvMessageBox = this.GetViewService<IMessageBoxViewService>();
+        
+        // User chooses the file to load
         var fileToOpen = await srvOpenFile.ShowOpenFileDialogAsync(
             new FileDialogFilter[]
             {
@@ -32,10 +36,22 @@ public partial class HomeViewModel : OwnViewModelBase, INavigationTarget
             "Open CheckList");
         if (string.IsNullOrEmpty(fileToOpen)) { return; }
 
-        using var streamReader = new StreamReader(fileToOpen);
-        var checkList = await CheckListModel.FromYamlAsync(streamReader);
+        // Load the file
+        CheckListModel checkList;
+        try
+        {
+            checkList = await CheckListModel.FromYamlFileAsync(fileToOpen);
+        }
+        catch (Exception)
+        {
+            await srvMessageBox.ShowAsync(
+                "Error",
+                "Unable to read file!",
+                MessageBoxButtons.Ok);
+            return;
+        }
         
-        var srvNavigation = this.GetViewService<INavigationViewService>();
+        // Navigate to the checklist
         srvNavigation.NavigateTo<CheckListViewModel, CheckListModel>(checkList);
     }
 }

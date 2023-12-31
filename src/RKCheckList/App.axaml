@@ -5,10 +5,14 @@
 
     <Application.Styles>
         <FluentTheme />
+        <StyleInclude Source="avares://RolandK.AvaloniaExtensions/Themes/Fluent.axaml" />
     </Application.Styles>
 
     <Application.Resources>
         <ResourceDictionary>
+            <SolidColorBrush x:Key="MainWindowFrameTitleBackgroundBrush"
+                             Color="Transparent" />
+            
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key='Light'>
                     <ExperimentalAcrylicMaterial x:Key="AppAcrylicMaterial"

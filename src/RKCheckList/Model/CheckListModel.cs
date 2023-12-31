@@ -8,7 +8,6 @@ namespace RKCheckList.Model;
 
 public class CheckListModel
 {
-    // public IReadOnlyList<CheckListItemModel> Items { get; } = new List<CheckListItemModel>();
     public CheckListItemModel[] Items { get; set; } = Array.Empty<CheckListItemModel>();
 
     public static async Task<CheckListModel> FromYamlFileAsync(string filePath)

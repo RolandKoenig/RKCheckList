@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using RKCheckList.Controls;
 using RKCheckList.Model;
 using RKCheckList.Services;
 using RKCheckList.Util;
 using RKCheckList.Views;
+using RolandK.AvaloniaExtensions.ViewServices;
 
 namespace RKCheckList;
 
@@ -34,6 +34,7 @@ public partial class MainWindowViewModel : OwnViewModelBase
         if (_initialNavigationDone) { return; }
 
         var srvNavigation = this.GetViewService<INavigationViewService>();
+        var srvMessageBox = this.GetViewService<IMessageBoxViewService>();
         
         if (string.IsNullOrEmpty(_rkCheckListArgumentParser.InitialFile))
         {
@@ -42,9 +43,24 @@ public partial class MainWindowViewModel : OwnViewModelBase
         }
         else
         {
-            var checklistFile = await CheckListModel.FromYamlFileAsync(_rkCheckListArgumentParser.InitialFile);
+            CheckListModel checkListFile;
+            try
+            {
+                checkListFile = await CheckListModel.FromYamlFileAsync(_rkCheckListArgumentParser.InitialFile);
+            }
+            catch (Exception)
+            {
+                await srvMessageBox.ShowAsync(
+                    "Error",
+                    "Unable to read file!",
+                    MessageBoxButtons.Ok);
             
-            srvNavigation.NavigateTo<CheckListViewModel, CheckListModel>(checklistFile);
+                srvNavigation.NavigateTo<HomeViewModel>();
+                _initialNavigationDone = true;
+                return;
+            }
+            
+            srvNavigation.NavigateTo<CheckListViewModel, CheckListModel>(checkListFile);
             _initialNavigationDone = true;
         }
     }
