@@ -6,6 +6,6 @@ public partial class CheckListView : MvvmUserControl
 {
     public CheckListView()
     {
-        InitializeComponent();
+        this.InitializeComponent();
     }
 }

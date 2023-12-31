@@ -6,6 +6,6 @@ public partial class HomeView : MvvmUserControl
 {
     public HomeView()
     {
-        InitializeComponent();
+        this.InitializeComponent();
     }
 }

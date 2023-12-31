@@ -2,9 +2,15 @@
 
 public interface INavigationViewService
 {
+    /// <summary>
+    /// Navigates to the given viewmodel. 
+    /// </summary>
     void NavigateTo<TViewModel>()
         where TViewModel : INavigationTarget;
 
+    /// <summary>
+    /// Navigates to the given viewmodel and passes the given argument.
+    /// </summary>
     void NavigateTo<TViewModel, TNavigationArgument>(TNavigationArgument argument)
         where TViewModel : INavigationTarget, INavigationDataReceiver<TNavigationArgument>;
 }

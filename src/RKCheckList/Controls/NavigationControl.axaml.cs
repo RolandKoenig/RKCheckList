@@ -9,8 +9,6 @@ namespace RKCheckList.Controls;
 
 public partial class NavigationControl : ViewServiceHostUserControl
 {
-    public string InitialViewName { get; set; } = string.Empty;
-
     public NavigationControl()
     {
         this.InitializeComponent();
