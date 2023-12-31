@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using RolandK.AvaloniaExtensions.DependencyInjection;
-using RolandK.AvaloniaExtensions.Mvvm.Markup;
+using RolandK.AvaloniaExtensions.Mvvm.Controls;
 
 namespace RKCheckList.Controls;
 

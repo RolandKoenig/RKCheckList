@@ -9,6 +9,7 @@
         x:Class="RKCheckList.MainWindow"
         ExtendClientAreaToDecorationsHint="True"
         TransparencyLevelHint="AcrylicBlur"
+        ViewFor="{x:Type local:MainWindowViewModel}"
         DataContext="{ext:CreateUsingDependencyInjection {x:Type local:MainWindowViewModel}}"
         d:DataContext="{x:Static local:MainWindowViewModel.DesignViewModel}"
         Title="RK CheckList"
