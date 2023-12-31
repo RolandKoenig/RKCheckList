@@ -12,7 +12,7 @@ namespace RKCheckList.Views;
 
 public partial class HomeViewModel : OwnViewModelBase, INavigationTarget
 {
-    public static HomeViewModel DesignViewModel => new HomeViewModel();
+    public static HomeViewModel DesignViewModel => new();
 
     /// <inheritdoc />
     public static Control CreateViewInstance()

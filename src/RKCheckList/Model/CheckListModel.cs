@@ -11,6 +11,14 @@ public class CheckListModel
     // public IReadOnlyList<CheckListItemModel> Items { get; } = new List<CheckListItemModel>();
     public CheckListItemModel[] Items { get; set; } = Array.Empty<CheckListItemModel>();
 
+    public static async Task<CheckListModel> FromYamlFileAsync(string filePath)
+    {
+        await using var fileStream = File.OpenRead(filePath);
+        using var fileStreamReader = new StreamReader(fileStream);
+
+        return await FromYamlAsync(fileStreamReader);
+    }
+    
     public static async Task<CheckListModel> FromYamlAsync(TextReader textReader)
     {
         var deserializer = new DeserializerBuilder()

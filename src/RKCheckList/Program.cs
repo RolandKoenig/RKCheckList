@@ -1,6 +1,7 @@
 ﻿using Avalonia;
 using System;
 using Microsoft.Extensions.DependencyInjection;
+using RKCheckList.Services;
 using RKCheckList.Views;
 using RolandK.AvaloniaExtensions.DependencyInjection;
 
@@ -23,9 +24,11 @@ internal class Program
             .LogToTrace()
             .UseDependencyInjection(services =>
             {
+                // Services
+                services.AddSingleton<IRKCheckListArgumentParser>(_ => new RKCheckListArgumentsParser(args));
+                
                 // ViewModels
-                services.AddTransient(_ => new MainWindowViewModel(args));
-
+                services.AddTransient<MainWindowViewModel>();
                 services.AddTransient<CheckListViewModel>();
                 services.AddTransient<HomeViewModel>();
             });

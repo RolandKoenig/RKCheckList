@@ -2,6 +2,8 @@
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using RKCheckList.Controls;
+using RKCheckList.Model;
+using RKCheckList.Services;
 using RKCheckList.Util;
 using RKCheckList.Views;
 
@@ -9,15 +11,16 @@ namespace RKCheckList;
 
 public partial class MainWindowViewModel : OwnViewModelBase
 {
-    private readonly string[] _args;
+    private readonly IRKCheckListArgumentParser _rkCheckListArgumentParser;
 
     private bool _initialNavigationDone;
 
-    public static MainWindowViewModel DesignViewModel => new MainWindowViewModel(Array.Empty<string>());
+    public static MainWindowViewModel DesignViewModel => new MainWindowViewModel(
+        new RKCheckListArgumentsParser(Array.Empty<string>()));
 
-    public MainWindowViewModel(string[] args)
+    public MainWindowViewModel(IRKCheckListArgumentParser rkCheckListArgumentParser)
     {
-        _args = args;
+        _rkCheckListArgumentParser = rkCheckListArgumentParser;
     }
 
     [RelayCommand]
@@ -26,14 +29,22 @@ public partial class MainWindowViewModel : OwnViewModelBase
         base.CloseHostWindow();
     }
 
-    private void TriggerInitialNavigation()
+    private async void TriggerInitialNavigation()
     {
         if (_initialNavigationDone) { return; }
+
+        var srvNavigation = this.GetViewService<INavigationViewService>();
         
-        var srvNavigation = this.TryGetViewService<INavigationViewService>();
-        if (srvNavigation != null)
+        if (string.IsNullOrEmpty(_rkCheckListArgumentParser.InitialFile))
         {
             srvNavigation.NavigateTo<HomeViewModel>();
+            _initialNavigationDone = true;
+        }
+        else
+        {
+            var checklistFile = await CheckListModel.FromYamlFileAsync(_rkCheckListArgumentParser.InitialFile);
+            
+            srvNavigation.NavigateTo<CheckListViewModel, CheckListModel>(checklistFile);
             _initialNavigationDone = true;
         }
     }
