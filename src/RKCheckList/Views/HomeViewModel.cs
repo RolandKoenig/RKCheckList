@@ -32,9 +32,6 @@ public partial class HomeViewModel : OwnViewModelBase, INavigationTarget
             "Open CheckList");
         if (string.IsNullOrEmpty(fileToOpen)) { return; }
 
-        // TODO
-        fileToOpen = fileToOpen.Substring(8);
-
         using var streamReader = new StreamReader(fileToOpen);
         var checkList = await CheckListModel.FromYamlAsync(streamReader);
         
