@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RKCheckList", "src\RKCheckL
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RKCheckList.Tests", "src\RKCheckList.Tests\RKCheckList.Tests.csproj", "{AF4239BE-23F6-425C-B854-68AC6ED056EA}"
 EndProject
-Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "RKCheckList.WindowsApp", "RKCheckList.WindowsApp\RKCheckList.WindowsApp.wapproj", "{6359C184-03BF-4FD2-A072-2FD56A31941E}"
+Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "RKCheckList.WindowsApp", "src\RKCheckList.WindowsApp\RKCheckList.WindowsApp.wapproj", "{6359C184-03BF-4FD2-A072-2FD56A31941E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
