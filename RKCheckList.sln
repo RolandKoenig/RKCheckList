@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RKCheckList", "src\RKCheckL
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RKCheckList.Tests", "src\RKCheckList.Tests\RKCheckList.Tests.csproj", "{AF4239BE-23F6-425C-B854-68AC6ED056EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RKCheckList.ExceptionViewer", "RKCheckList.ExceptionViewer\RKCheckList.ExceptionViewer.csproj", "{B261FB4E-C535-41B8-935F-36E5B6221E8C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RKCheckList.ExceptionViewer", "src\RKCheckList.ExceptionViewer\RKCheckList.ExceptionViewer.csproj", "{B261FB4E-C535-41B8-935F-36E5B6221E8C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

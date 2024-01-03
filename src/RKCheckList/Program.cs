@@ -28,11 +28,18 @@ internal class Program
         }
         catch (Exception ex)
         {
+            // Write exception details to a temporary file
             var errorGuid = Guid.NewGuid();
-            var errorFilePath = Path.Combine(
+            var errorDirectoryPath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                "RKCheckList");
+            if (!Directory.Exists(errorDirectoryPath))
+            {
+                Directory.CreateDirectory(errorDirectoryPath);
+            }
+            var errorFilePath = Path.Combine(
+                errorDirectoryPath,
                 $"Error-{errorGuid}.err");
-
             var errorDetailsBuilder = new StringBuilder();
             var actException = ex;
             while (actException != null)
@@ -48,23 +55,49 @@ internal class Program
                 
                 actException = actException.InnerException;
             }
-            
             File.WriteAllText(errorFilePath, errorDetailsBuilder.ToString());
 
-            var processStartInfo = new ProcessStartInfo(
-                Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!,
-                    "RKCheckListExceptionViewer"),
-                $"\"{errorFilePath}\"");
-            processStartInfo.ErrorDialog = false;
-            processStartInfo.UseShellExecute = false;
-            
-            var childProcess = Process.Start(processStartInfo);
-            if (childProcess != null)
+            try
             {
-                childProcess.WaitForExit();
+                // Try to find the viewer executable
+                var executablePath = Path.Combine(
+                    Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!,
+                    "RKCheckListExceptionViewer");
+                if (!Path.Exists(executablePath))
+                {
+                    executablePath += ".exe";
+                    if (!Path.Exists(executablePath))
+                    {
+                        return -1;
+                    }
+                }
+
+                // Start the viewer executable
+                var processStartInfo = new ProcessStartInfo(
+                    Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!,
+                        "RKCheckListExceptionViewer.exe"),
+                    $"\"{errorFilePath}\"");
+                processStartInfo.ErrorDialog = false;
+                processStartInfo.UseShellExecute = false;
+
+                var childProcess = Process.Start(processStartInfo);
+                if (childProcess != null)
+                {
+                    childProcess.WaitForExit();
+                }
             }
-            
-            return 0;
+            catch
+            {
+                // Error while showing the error message
+                // Nothing more we can do here...
+            }
+            finally
+            {
+                // Delete the temporary file
+                File.Delete(errorFilePath);
+            }
+
+            return -1;
         }
     }
 
