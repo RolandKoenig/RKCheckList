@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using RKCheckList.Services;
 using RKCheckList.Views;
 using RolandK.AvaloniaExtensions.DependencyInjection;
+using RolandK.InProcessMessaging;
 
 namespace RKCheckList;
 
@@ -36,9 +37,13 @@ internal class Program
             .LogToTrace()
             .UseDependencyInjection(services =>
             {
-                // Services
-                services.AddSingleton<IRKCheckListArgumentParser>(_ => new RKCheckListArgumentsParser(args));
+                var messenger = new InProcessMessenger();
                 
+                // Services
+                services.AddSingleton<IRKCheckListArgumentsContainer>(_ => new RKCheckListArgumentsContainer(messenger, args));
+                services.AddSingleton<IInProcessMessagePublisher>(messenger);
+                services.AddSingleton<IInProcessMessageSubscriber>(messenger);
+
                 // ViewModels
                 services.AddTransient<MainWindowViewModel>();
                 services.AddTransient<CheckListViewModel>();

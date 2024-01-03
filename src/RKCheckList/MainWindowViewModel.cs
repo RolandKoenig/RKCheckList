@@ -8,17 +8,21 @@ using RKCheckList.Services;
 using RKCheckList.Util;
 using RKCheckList.Views;
 using RolandK.AvaloniaExtensions.ViewServices;
+using RolandK.InProcessMessaging;
+using InitialFileChangedMessage = RKCheckList.Messages.InitialFileChangedMessage;
 
 namespace RKCheckList;
 
 public partial class MainWindowViewModel : OwnViewModelBase
 {
-    private readonly IRKCheckListArgumentParser _rkCheckListArgumentParser;
-
-    private bool _initialNavigationDone;
-
+    private readonly IRKCheckListArgumentsContainer _rkCheckListArgumentContainer;
+    private readonly IInProcessMessageSubscriber _messageSubscriber;
+    
+    private MessageSubscription? _subscription;
+    
     public static MainWindowViewModel DesignViewModel => new MainWindowViewModel(
-        new RKCheckListArgumentsParser(Array.Empty<string>()));
+        new RKCheckListArgumentsContainer(new InProcessMessenger(), Array.Empty<string>()),
+        new InProcessMessenger());
 
     public string Title
     {
@@ -38,9 +42,12 @@ public partial class MainWindowViewModel : OwnViewModelBase
         }
     }
 
-    public MainWindowViewModel(IRKCheckListArgumentParser rkCheckListArgumentParser)
+    public MainWindowViewModel(
+        IRKCheckListArgumentsContainer rkCheckListArgumentContainer,
+        IInProcessMessageSubscriber messageSubscriber)
     {
-        _rkCheckListArgumentParser = rkCheckListArgumentParser;
+        _rkCheckListArgumentContainer = rkCheckListArgumentContainer;
+        _messageSubscriber = messageSubscriber;
     }
 
     [RelayCommand]
@@ -49,24 +56,24 @@ public partial class MainWindowViewModel : OwnViewModelBase
         base.CloseHostWindow();
     }
 
-    private async void TriggerInitialNavigation()
+    private async void TriggerNavigation()
     {
-        if (_initialNavigationDone) { return; }
-
         var srvNavigation = this.GetViewService<INavigationViewService>();
         var srvMessageBox = this.GetViewService<IMessageBoxViewService>();
         
-        if (string.IsNullOrEmpty(_rkCheckListArgumentParser.InitialFile))
+        if (string.IsNullOrEmpty(_rkCheckListArgumentContainer.InitialFile))
         {
-            srvNavigation.NavigateTo<HomeViewModel>();
-            _initialNavigationDone = true;
+            if (!srvNavigation.IsCurrentlyOnAnyView())
+            {
+                srvNavigation.NavigateTo<HomeViewModel>();
+            }
         }
         else
         {
             CheckListModel checkListFile;
             try
             {
-                checkListFile = await CheckListModel.FromYamlFileAsync(_rkCheckListArgumentParser.InitialFile);
+                checkListFile = await CheckListModel.FromYamlFileAsync(_rkCheckListArgumentContainer.InitialFile);
             }
             catch (Exception)
             {
@@ -76,22 +83,29 @@ public partial class MainWindowViewModel : OwnViewModelBase
                     MessageBoxButtons.Ok);
             
                 srvNavigation.NavigateTo<HomeViewModel>();
-                _initialNavigationDone = true;
                 return;
             }
             
             srvNavigation.NavigateTo<CheckListViewModel, CheckListModel>(checkListFile);
-            _initialNavigationDone = true;
         }
     }
 
     /// <inheritdoc />
     protected override void OnAssociatedViewChanged(object? associatedView)
     {
+        _subscription?.Dispose();
+        _subscription = null;
+        
         if (associatedView == null) { return; }
-
-        this.TriggerInitialNavigation();
+        
+        _subscription = _messageSubscriber.SubscribeWeak<InitialFileChangedMessage>(this.OnMessage_Received);
+        this.TriggerNavigation();
         
         base.OnAssociatedViewChanged(associatedView);
+    }
+
+    private void OnMessage_Received(InitialFileChangedMessage message)
+    {
+        this.TriggerNavigation();
     }
 }

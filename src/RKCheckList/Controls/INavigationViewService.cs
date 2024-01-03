@@ -13,4 +13,8 @@ public interface INavigationViewService
     /// </summary>
     void NavigateTo<TViewModel, TNavigationArgument>(TNavigationArgument argument)
         where TViewModel : INavigationTarget, INavigationDataReceiver<TNavigationArgument>;
+
+    bool IsCurrentlyOn<TViewModel>();
+
+    bool IsCurrentlyOnAnyView();
 }

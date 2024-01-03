@@ -16,4 +16,15 @@ internal class NavigationViewService(NavigationControl navigationControl) : View
     {
         navigationControl.NavigateTo<TViewModel>();
     }
+    
+    /// <inheritdoc />
+    public bool IsCurrentlyOn<TViewModel>()
+    {
+        return navigationControl.IsCurrentlyOn<TViewModel>();
+    }
+
+    public bool IsCurrentlyOnAnyView()
+    {
+        return navigationControl.IsCurrentlyOnAnyView();
+    }
 }

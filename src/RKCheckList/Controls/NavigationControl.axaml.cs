@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Avalonia;
 using Microsoft.Extensions.DependencyInjection;
 using RolandK.AvaloniaExtensions.DependencyInjection;
 using RolandK.AvaloniaExtensions.Mvvm.Controls;
@@ -37,5 +38,19 @@ public partial class NavigationControl : ViewServiceHostUserControl
         viewObject.DataContext = viewModel;
         
         this.CtrlTransition.Content = viewObject;
+    }
+
+    public bool IsCurrentlyOn<TViewModel>()
+    {
+        if (this.CtrlTransition.Content == null) { return false; }
+
+        return
+            (this.CtrlTransition.Content is StyledElement currentView) &&
+            (currentView.DataContext is TViewModel);
+    }
+
+    public bool IsCurrentlyOnAnyView()
+    {
+        return this.CtrlTransition.Content != null;
     }
 }
