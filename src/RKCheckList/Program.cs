@@ -1,5 +1,9 @@
 ﻿using Avalonia;
 using System;
+using System.Diagnostics;
+using System.IO;
+using System.Reflection;
+using System.Text;
 using Microsoft.Extensions.DependencyInjection;
 using RKCheckList.Services;
 using RKCheckList.Views;
@@ -24,8 +28,43 @@ internal class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex.ToString());
-            return -1;
+            var errorGuid = Guid.NewGuid();
+            var errorFilePath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                $"Error-{errorGuid}.err");
+
+            var errorDetailsBuilder = new StringBuilder();
+            var actException = ex;
+            while (actException != null)
+            {
+                if (errorDetailsBuilder.Length > 0)
+                {
+                    errorDetailsBuilder.AppendLine();
+                }
+                
+                errorDetailsBuilder.Append($"------- Exception of type {actException.GetType().FullName}");
+                errorDetailsBuilder.Append(actException.ToString());
+                errorDetailsBuilder.AppendLine();
+                
+                actException = actException.InnerException;
+            }
+            
+            File.WriteAllText(errorFilePath, errorDetailsBuilder.ToString());
+
+            var processStartInfo = new ProcessStartInfo(
+                Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!,
+                    "RKCheckListExceptionViewer"),
+                $"\"{errorFilePath}\"");
+            processStartInfo.ErrorDialog = false;
+            processStartInfo.UseShellExecute = false;
+            
+            var childProcess = Process.Start(processStartInfo);
+            if (childProcess != null)
+            {
+                childProcess.WaitForExit();
+            }
+            
+            return 0;
         }
     }
 

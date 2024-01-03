@@ -29,4 +29,8 @@
     <AvaloniaResource Include="Assets\RKCheckList.ico" />
     <AvaloniaResource Include="Assets\RKCheckList.svg" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\..\RKCheckList.ExceptionViewer\RKCheckList.ExceptionViewer.csproj" />
+  </ItemGroup>
 </Project>
