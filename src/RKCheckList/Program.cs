@@ -28,17 +28,10 @@ internal class Program
         catch (Exception ex)
         {
             // Write exception details to a temporary file
-            var errorGuid = Guid.NewGuid();
-            var errorDirectoryPath = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                "RKCheckList");
-            if (!Directory.Exists(errorDirectoryPath))
-            {
-                Directory.CreateDirectory(errorDirectoryPath);
-            }
-            var errorFilePath = Path.Combine(
-                errorDirectoryPath,
-                $"Error-{errorGuid}.err");
+            // var errorGuid = Guid.NewGuid();
+            var errorDirectoryPath = GlobalErrorReporting.GetErrorFileDirectoryAndEnsureCreated();
+            var errorFilePath = GlobalErrorReporting.GenerateErrorFilePath(errorDirectoryPath);
+            
             var errorDetailsBuilder = new StringBuilder();
             var actException = ex;
             while (actException != null)

@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
@@ -6,6 +7,37 @@ namespace RKCheckList.ExceptionViewer;
 
 public static class GlobalErrorReporting
 {
+    public static string GetErrorFileDirectoryAndEnsureCreated()
+    {
+        var errorDirectoryPath = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+            "RKCheckList");
+        if (!Directory.Exists(errorDirectoryPath))
+        {
+            Directory.CreateDirectory(errorDirectoryPath);
+        }
+        return errorDirectoryPath;
+    }
+
+    public static string GenerateErrorFilePath(string errorDirectoryPath)
+    {
+        string errorFilePath;
+        do
+        {
+            var errorGuid = Guid.NewGuid();
+            errorFilePath = Path.Combine(
+                errorDirectoryPath,
+                $"Error-{errorGuid}.err");
+        } while (File.Exists(errorFilePath));
+
+        return errorFilePath;
+    }
+    
+    public static void WriteExceptionInfoTo(Exception ex, StreamWriter outStream)
+    {
+        
+    }
+    
     /// <summary>
     /// Tries to find the absolute path to the viewer executable.
     /// </summary>
