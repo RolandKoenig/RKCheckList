@@ -2,6 +2,9 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using RKCheckList.ExceptionViewer.Data;
 
 namespace RKCheckList.ExceptionViewer;
 
@@ -32,10 +35,20 @@ public static class GlobalErrorReporting
 
         return errorFilePath;
     }
-    
-    public static void WriteExceptionInfoTo(Exception ex, StreamWriter outStream)
+
+    public static void WriteExceptionInfoToFile(Exception exception, string targetFileName)
     {
+        using var outStream = File.Create(targetFileName);
         
+        var exceptionInfo = new ExceptionInfo(exception);
+        JsonSerializer.Serialize(
+            outStream, 
+            exceptionInfo, 
+            new JsonSerializerOptions(JsonSerializerDefaults.General)
+            {
+                WriteIndented = true,
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+            });
     }
     
     /// <summary>

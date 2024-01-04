@@ -2,8 +2,10 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Text.Json;
 using Microsoft.Extensions.DependencyInjection;
 using RKCheckList.ExceptionViewer;
+using RKCheckList.ExceptionViewer.Data;
 using RKCheckList.Services;
 using RKCheckList.Views;
 using RolandK.AvaloniaExtensions.DependencyInjection;
@@ -31,23 +33,7 @@ internal class Program
             // var errorGuid = Guid.NewGuid();
             var errorDirectoryPath = GlobalErrorReporting.GetErrorFileDirectoryAndEnsureCreated();
             var errorFilePath = GlobalErrorReporting.GenerateErrorFilePath(errorDirectoryPath);
-            
-            var errorDetailsBuilder = new StringBuilder();
-            var actException = ex;
-            while (actException != null)
-            {
-                if (errorDetailsBuilder.Length > 0)
-                {
-                    errorDetailsBuilder.AppendLine();
-                }
-                
-                errorDetailsBuilder.Append($"------- Exception of type {actException.GetType().FullName}");
-                errorDetailsBuilder.Append(actException.ToString());
-                errorDetailsBuilder.AppendLine();
-                
-                actException = actException.InnerException;
-            }
-            File.WriteAllText(errorFilePath, errorDetailsBuilder.ToString());
+            GlobalErrorReporting.WriteExceptionInfoToFile(ex, errorFilePath);
 
             try
             {

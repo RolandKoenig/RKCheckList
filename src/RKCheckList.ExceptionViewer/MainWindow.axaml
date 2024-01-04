@@ -2,9 +2,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:data="clr-namespace:RKCheckList.ExceptionViewer.Data"
         mc:Ignorable="d" Width="600" Height="400"
         x:Class="RKCheckList.ExceptionViewer.MainWindow"
+        x:Name="CtrlMainWindow"
         Title="Unhandled Error">
+    <Window.DataContext>
+        <data:ExceptionInfo />
+    </Window.DataContext>
+    
     <DockPanel LastChildFill="True">
         <Panel DockPanel.Dock="Bottom" Height="45">
             <Button Width="200" Content="Close"
@@ -15,15 +21,18 @@
         
         <Grid Margin="5"
               ColumnDefinitions="200,*">
-            <TextBox Grid.Column="1" 
-                     x:Name="CtrlErrorDetails" 
-                     IsReadOnly="True" />
-            <!-- <StackPanel Grid.Column="1"
-                        Orientation="Vertical">
-                <TextBlock Classes="H1">Unhandled error</TextBlock>
-                <TextBox x:Name="CtrlErrorDetails"
-                         MaxLines="30" />
-            </StackPanel> -->
+            <TreeView Grid.Column="1" 
+                      ItemsSource="{Binding Path=ChildNodes}">
+                <TreeView.ItemTemplate>
+                    <TreeDataTemplate ItemsSource="{Binding Path=ChildNodes}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Path=PropertyName}" />
+                            <TextBlock Text=":" />
+                            <TextBlock Text="{Binding Path=PropertyValue}" />
+                        </StackPanel>
+                    </TreeDataTemplate>
+                </TreeView.ItemTemplate>
+            </TreeView>
         </Grid>
     </DockPanel>
 </Window>
