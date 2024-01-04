@@ -1,10 +1,9 @@
 ﻿using Avalonia;
 using System;
-using System.Diagnostics;
 using System.IO;
-using System.Reflection;
 using System.Text;
 using Microsoft.Extensions.DependencyInjection;
+using RKCheckList.ExceptionViewer;
 using RKCheckList.Services;
 using RKCheckList.Views;
 using RolandK.AvaloniaExtensions.DependencyInjection;
@@ -59,32 +58,12 @@ internal class Program
 
             try
             {
-                // Try to find the viewer executable
-                var executablePath = Path.Combine(
-                    Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!,
-                    "RKCheckListExceptionViewer");
-                if (!Path.Exists(executablePath))
+                if (!GlobalErrorReporting.TryFindViewerExecutable(out var executablePath))
                 {
-                    executablePath += ".exe";
-                    if (!Path.Exists(executablePath))
-                    {
-                        return -1;
-                    }
+                    return -1;
                 }
-
-                // Start the viewer executable
-                var processStartInfo = new ProcessStartInfo(
-                    Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!,
-                        "RKCheckListExceptionViewer.exe"),
-                    $"\"{errorFilePath}\"");
-                processStartInfo.ErrorDialog = false;
-                processStartInfo.UseShellExecute = false;
-
-                var childProcess = Process.Start(processStartInfo);
-                if (childProcess != null)
-                {
-                    childProcess.WaitForExit();
-                }
+                
+                GlobalErrorReporting.ShowGlobalException(errorFilePath, executablePath);
             }
             catch
             {
