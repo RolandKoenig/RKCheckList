@@ -10,6 +10,12 @@ namespace RKCheckList.ExceptionViewer;
 
 public static class GlobalErrorReporting
 {
+    /// <summary>
+    /// Tries to show an error dialog with some exception details.
+    /// If it is not possible for any reason, this method simply does nothing.
+    /// </summary>
+    /// <param name="exception">The exception to be shown to the user.</param>
+    /// <param name="applicationName">The name of the application. It should be a technical name, the method uses it to create a directory in the filesystem.</param>
     public static void TryShowGlobalExceptionDialogInAnotherProcess(Exception exception, string applicationName)
     {
         try
@@ -81,9 +87,6 @@ public static class GlobalErrorReporting
             });
     }
     
-    /// <summary>
-    /// Tries to find the absolute path to the viewer executable.
-    /// </summary>
     private static bool TryFindViewerExecutable(out string executablePath)
     {
         executablePath = string.Empty;
@@ -110,10 +113,7 @@ public static class GlobalErrorReporting
         executablePath = executablePathCheck;
         return true;
     }
-
-    /// <summary>
-    /// Runs the viewer applications and waits for it to exit.
-    /// </summary>
+    
     private static void ShowGlobalException(string exceptionDetailsFilePath, string executablePath)
     {
         var processStartInfo = new ProcessStartInfo(

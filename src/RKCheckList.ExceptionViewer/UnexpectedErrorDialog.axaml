@@ -6,6 +6,7 @@
         mc:Ignorable="d" Width="600" Height="400"
         x:Class="RKCheckList.ExceptionViewer.UnexpectedErrorDialog"
         x:Name="CtrlMainWindow"
+        x:DataType="data:ExceptionInfo"
         Title="{Binding Path=MainMessage}">
     <Window.DataContext>
         <data:ExceptionInfo />
@@ -36,7 +37,7 @@
                     Content="Close"
                     Margin="4" 
                     HorizontalAlignment="Right"
-                    Click="OnCmdOK_Click" />
+                    Click="OnCmdClose_Click" />
         </Panel>
         
         <DockPanel Grid.Column="1"
