@@ -48,7 +48,7 @@ public partial class HomeViewModel : OwnViewModelBase, INavigationTarget
                 "Error",
                 "Unable to read file!",
                 MessageBoxButtons.Ok);
-            throw;
+            return;
         }
         
         // Navigate to the checklist
