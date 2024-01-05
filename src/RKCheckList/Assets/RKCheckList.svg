@@ -7,7 +7,7 @@
    viewBox="0 0 512 512"
    version="1.1"
    id="svg5"
-   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   inkscape:version="1.2.1 (9c6d41e, 2022-07-14)"
    sodipodi:docname="RKCheckList.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -25,12 +25,12 @@
      inkscape:document-units="px"
      showgrid="false"
      inkscape:zoom="1.4"
-     inkscape:cx="221.78571"
-     inkscape:cy="230"
+     inkscape:cx="162.14286"
+     inkscape:cy="279.64286"
      inkscape:window-width="2560"
-     inkscape:window-height="1369"
-     inkscape:window-x="2552"
-     inkscape:window-y="-8"
+     inkscape:window-height="1311"
+     inkscape:window-x="1800"
+     inkscape:window-y="25"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1"
      showguides="true"
@@ -105,16 +105,17 @@
      inkscape:groupmode="layer"
      id="layer1">
     <rect
-       style="fill:url(#linearGradient1675);fill-rule:evenodd;stroke-width:0.996938;fill-opacity:1"
+       style="fill:url(#linearGradient1675);fill-opacity:1;fill-rule:evenodd;stroke-width:0.996938"
        id="rect858"
        width="512"
        height="512"
        x="0"
        y="0"
-       clip-path="url(#clipPath988)" />
+       clip-path="url(#clipPath988)"
+       transform="matrix(0.92466518,0,0,0.91350446,20,21.428572)" />
     <path
-       style="fill:none;stroke:#ffffff;stroke-width:50;stroke-dasharray:none;stroke-opacity:1"
-       d="m 134.22166,256.1419 71.50138,71.50138 165.66165,-167.67577"
+       style="fill:none;stroke:#ffffff;stroke-width:45.9534;stroke-dasharray:none;stroke-opacity:1"
+       d="m 144.11009,255.41535 66.11484,65.31682 153.18156,-153.17256"
        id="path3051" />
   </g>
   <script
