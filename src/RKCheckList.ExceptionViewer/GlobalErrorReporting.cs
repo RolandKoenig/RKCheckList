@@ -10,11 +10,41 @@ namespace RKCheckList.ExceptionViewer;
 
 public static class GlobalErrorReporting
 {
-    public static string GetErrorFileDirectoryAndEnsureCreated()
+    public static void TryShowGlobalExceptionDialogInAnotherProcess(Exception exception, string applicationName)
+    {
+        try
+        {
+            // Write exception details to a temporary file
+            var errorDirectoryPath = GetErrorFileDirectoryAndEnsureCreated(applicationName);
+            var errorFilePath = GenerateErrorFilePath(errorDirectoryPath);
+            
+            WriteExceptionInfoToFile(exception, errorFilePath);
+            try
+            {
+                if (!TryFindViewerExecutable(out var executablePath))
+                {
+                    return;
+                }
+                
+                ShowGlobalException(errorFilePath, executablePath);
+            }
+            finally
+            {
+                // Delete the temporary file
+                File.Delete(errorFilePath);
+            }
+        }
+        catch(Exception)
+        {
+            // Nothing to do here..
+        }
+    }
+    
+    private static string GetErrorFileDirectoryAndEnsureCreated(string applicationName)
     {
         var errorDirectoryPath = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-            "RKCheckList");
+            applicationName);
         if (!Directory.Exists(errorDirectoryPath))
         {
             Directory.CreateDirectory(errorDirectoryPath);
@@ -22,7 +52,7 @@ public static class GlobalErrorReporting
         return errorDirectoryPath;
     }
 
-    public static string GenerateErrorFilePath(string errorDirectoryPath)
+    private static string GenerateErrorFilePath(string errorDirectoryPath)
     {
         string errorFilePath;
         do
@@ -36,7 +66,7 @@ public static class GlobalErrorReporting
         return errorFilePath;
     }
 
-    public static void WriteExceptionInfoToFile(Exception exception, string targetFileName)
+    private static void WriteExceptionInfoToFile(Exception exception, string targetFileName)
     {
         using var outStream = File.Create(targetFileName);
         
@@ -54,7 +84,7 @@ public static class GlobalErrorReporting
     /// <summary>
     /// Tries to find the absolute path to the viewer executable.
     /// </summary>
-    public static bool TryFindViewerExecutable(out string executablePath)
+    private static bool TryFindViewerExecutable(out string executablePath)
     {
         executablePath = string.Empty;
 
@@ -84,7 +114,7 @@ public static class GlobalErrorReporting
     /// <summary>
     /// Runs the viewer applications and waits for it to exit.
     /// </summary>
-    public static void ShowGlobalException(string exceptionDetailsFilePath, string executablePath)
+    private static void ShowGlobalException(string exceptionDetailsFilePath, string executablePath)
     {
         var processStartInfo = new ProcessStartInfo(
             executablePath,

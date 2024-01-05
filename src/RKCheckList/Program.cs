@@ -1,11 +1,8 @@
 ﻿using Avalonia;
 using System;
-using System.IO;
 using System.Text;
-using System.Text.Json;
 using Microsoft.Extensions.DependencyInjection;
 using RKCheckList.ExceptionViewer;
-using RKCheckList.ExceptionViewer.Data;
 using RKCheckList.Services;
 using RKCheckList.Views;
 using RolandK.AvaloniaExtensions.DependencyInjection;
@@ -29,32 +26,7 @@ internal class Program
         }
         catch (Exception ex)
         {
-            // Write exception details to a temporary file
-            // var errorGuid = Guid.NewGuid();
-            var errorDirectoryPath = GlobalErrorReporting.GetErrorFileDirectoryAndEnsureCreated();
-            var errorFilePath = GlobalErrorReporting.GenerateErrorFilePath(errorDirectoryPath);
-            GlobalErrorReporting.WriteExceptionInfoToFile(ex, errorFilePath);
-
-            try
-            {
-                if (!GlobalErrorReporting.TryFindViewerExecutable(out var executablePath))
-                {
-                    return -1;
-                }
-                
-                GlobalErrorReporting.ShowGlobalException(errorFilePath, executablePath);
-            }
-            catch
-            {
-                // Error while showing the error message
-                // Nothing more we can do here...
-            }
-            finally
-            {
-                // Delete the temporary file
-                File.Delete(errorFilePath);
-            }
-
+            GlobalErrorReporting.TryShowGlobalExceptionDialogInAnotherProcess(ex, "RKCheckList");
             return -1;
         }
     }
