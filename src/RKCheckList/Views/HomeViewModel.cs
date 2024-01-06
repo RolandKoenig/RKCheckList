@@ -15,6 +15,9 @@ public partial class HomeViewModel : OwnViewModelBase, INavigationTarget
     public static HomeViewModel DesignViewModel => new();
 
     /// <inheritdoc />
+    public string Title => "Home";
+
+    /// <inheritdoc />
     public static Control CreateViewInstance()
     {
         return new HomeView();

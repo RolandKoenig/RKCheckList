@@ -2,6 +2,8 @@
 
 public interface INavigationViewService
 {
+    string CurrentViewTitle { get; }
+    
     /// <summary>
     /// Navigates to the given viewmodel. 
     /// </summary>

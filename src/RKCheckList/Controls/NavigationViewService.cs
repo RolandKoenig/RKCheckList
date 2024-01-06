@@ -4,6 +4,8 @@ namespace RKCheckList.Controls;
 
 internal class NavigationViewService(NavigationControl navigationControl) : ViewServiceBase, INavigationViewService
 {
+    public string CurrentViewTitle => navigationControl.CurrentViewTitle;
+    
     /// <inheritdoc />
     public void NavigateTo<TViewModel, TNavigationArgument>(TNavigationArgument argument) 
         where TViewModel : INavigationTarget, INavigationDataReceiver<TNavigationArgument>

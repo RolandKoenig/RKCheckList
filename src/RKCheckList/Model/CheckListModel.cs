@@ -8,6 +8,8 @@ namespace RKCheckList.Model;
 
 public class CheckListModel
 {
+    public string Title { get; set; } = string.Empty;
+    
     public CheckListItemModel[] Items { get; set; } = Array.Empty<CheckListItemModel>();
 
     public static async Task<CheckListModel> FromYamlFileAsync(string filePath)

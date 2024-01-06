@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using CommunityToolkit.Mvvm.Input;
 using RKCheckList.Controls;
+using RKCheckList.Messages;
 using RKCheckList.Model;
 using RKCheckList.Services;
 using RKCheckList.Util;
@@ -17,8 +19,8 @@ public partial class MainWindowViewModel : OwnViewModelBase
 {
     private readonly IRKCheckListArgumentsContainer _rkCheckListArgumentContainer;
     private readonly IInProcessMessageSubscriber _messageSubscriber;
-    
-    private MessageSubscription? _subscription;
+
+    private IEnumerable<MessageSubscription>? _messageSubscriptions;
     
     public static MainWindowViewModel DesignViewModel => new MainWindowViewModel(
         new RKCheckListArgumentsContainer(new InProcessMessenger(), Array.Empty<string>()),
@@ -32,12 +34,21 @@ public partial class MainWindowViewModel : OwnViewModelBase
             strBuilder.Append("RK CheckList");
 
             var version = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version;
-            if (!string.IsNullOrEmpty(version))
+            if (!string.IsNullOrEmpty(version) &&
+                Version.TryParse(version, out var parsedVersion))
             {
                 strBuilder.Append(' ');
-                strBuilder.Append(version);
+                strBuilder.Append($"{parsedVersion.Major}.{parsedVersion.Minor}");
             }
 
+            var srvNavigation = this.TryGetViewService<INavigationViewService>();
+            var currentViewTitle = srvNavigation?.CurrentViewTitle;
+            if (!string.IsNullOrEmpty(currentViewTitle))
+            {
+                strBuilder.Append(" - ");
+                strBuilder.Append(currentViewTitle);
+            }
+            
             return strBuilder.ToString();
         }
     }
@@ -93,19 +104,30 @@ public partial class MainWindowViewModel : OwnViewModelBase
     /// <inheritdoc />
     protected override void OnAssociatedViewChanged(object? associatedView)
     {
-        _subscription?.Dispose();
-        _subscription = null;
+        if (_messageSubscriptions != null)
+        {
+            foreach (var actSubscription in _messageSubscriptions)
+            {
+                actSubscription.Unsubscribe();
+            }
+            _messageSubscriptions = null;
+        }
         
         if (associatedView == null) { return; }
         
-        _subscription = _messageSubscriber.SubscribeWeak<InitialFileChangedMessage>(this.OnMessage_Received);
+        _messageSubscriptions = _messageSubscriber.SubscribeAllWeak(this);
         this.TriggerNavigation();
         
         base.OnAssociatedViewChanged(associatedView);
     }
 
-    private void OnMessage_Received(InitialFileChangedMessage message)
+    private void OnMessageReceived(InitialFileChangedMessage message)
     {
         this.TriggerNavigation();
+    }
+
+    private void OnMessageReceived(NavigationCompleteMessage message)
+    {
+        this.OnPropertyChanged(nameof(MainWindowViewModel.Title));
     }
 }

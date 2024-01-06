@@ -1,4 +1,5 @@
+title: "Sample"
 items:
-  - text: "item1"
-  - text: "item2"
-  - text: "item3"
+  - text: "The first sample item"
+  - text: "The second sample item, which is less important"
+  - text: "The third sample item"

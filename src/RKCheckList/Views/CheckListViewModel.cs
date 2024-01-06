@@ -8,9 +8,14 @@ namespace RKCheckList.Views;
 
 public class CheckListViewModel : OwnViewModelBase, INavigationTarget, INavigationDataReceiver<CheckListModel>
 {
+    private CheckListModel? _currentModel;
+    
     public static CheckListViewModel DesignViewModel => new ();
 
     public ObservableCollection<CheckListItemViewModel> Items { get; } = new ();
+
+    /// <inheritdoc />
+    public string Title => _currentModel?.Title ?? string.Empty;
 
     /// <inheritdoc />
     public static Control CreateViewInstance()
@@ -22,6 +27,7 @@ public class CheckListViewModel : OwnViewModelBase, INavigationTarget, INavigati
     {
         this.Items.Clear();
 
+        _currentModel = dto;
         foreach (var actItemModel in dto.Items)
         {
             this.Items.Add(new CheckListItemViewModel(actItemModel));
