@@ -26,11 +26,13 @@
   </ItemGroup>
   
   <ItemGroup>
-    <AvaloniaResource Include="Assets\RKCheckList.ico" />
-    <AvaloniaResource Include="Assets\RKCheckList.svg" />
+    <ProjectReference Include="..\RKCheckList.ExceptionViewer\RKCheckList.ExceptionViewer.csproj" />
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\RKCheckList.ExceptionViewer\RKCheckList.ExceptionViewer.csproj" />
+    <AvaloniaResource Include="..\..\assets\RKCheckList.svg">
+      <Link>Assets/RKCheckList.svg</Link>
+    </AvaloniaResource>
+    <AvaloniaResource Include="Assets\RKCheckList.ico" />
   </ItemGroup>
 </Project>
