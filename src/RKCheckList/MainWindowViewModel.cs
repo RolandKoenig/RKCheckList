@@ -11,7 +11,6 @@ using RKCheckList.Util;
 using RKCheckList.Views;
 using RolandK.AvaloniaExtensions.ViewServices;
 using RolandK.InProcessMessaging;
-using InitialFileChangedMessage = RKCheckList.Messages.InitialFileChangedMessage;
 
 namespace RKCheckList;
 
@@ -104,14 +103,8 @@ public partial class MainWindowViewModel : OwnViewModelBase
     /// <inheritdoc />
     protected override void OnAssociatedViewChanged(object? associatedView)
     {
-        if (_messageSubscriptions != null)
-        {
-            foreach (var actSubscription in _messageSubscriptions)
-            {
-                actSubscription.Unsubscribe();
-            }
-            _messageSubscriptions = null;
-        }
+        _messageSubscriptions?.UnsubscribeAll();
+        _messageSubscriptions = null;
         
         if (associatedView == null) { return; }
         
