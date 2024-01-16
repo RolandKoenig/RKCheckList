@@ -1,8 +1,13 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="RKCheckList.App"
-             RequestedThemeVariant="Default">
+             RequestedThemeVariant="Default"
+             Name="RK CheckList">
 
+    <NativeMenu.Menu>
+        <NativeMenu />
+    </NativeMenu.Menu>
+    
     <Application.Styles>
         <FluentTheme />
         <StyleInclude Source="avares://RolandK.AvaloniaExtensions/Themes/Fluent.axaml" />
