@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
@@ -26,7 +27,7 @@ public partial class App : Application
         var srvArgumentsContainer = serviceProvider.GetRequiredService<IRKCheckListArgumentsContainer>();
 
         var fileUrl = new Uri(e.Urls.First(), UriKind.Absolute);
-        srvArgumentsContainer.NotifyFileOpened(fileUrl.AbsolutePath);
+        srvArgumentsContainer.NotifyFileOpened(HttpUtility.UrlDecode(fileUrl.AbsolutePath));
     }
 
     public override void Initialize()
