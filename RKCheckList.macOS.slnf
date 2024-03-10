@@ -1,0 +1,10 @@
+{
+  "solution": {
+    "path": "RKCheckList.sln",
+    "projects": [
+      "src\\RKCheckList.ExceptionViewer\\RKCheckList.ExceptionViewer.csproj",
+      "src\\RKCheckList.Tests\\RKCheckList.Tests.csproj",
+      "src\\RKCheckList\\RKCheckList.csproj"
+    ]
+  }
+}
