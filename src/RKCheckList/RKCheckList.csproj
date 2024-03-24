@@ -20,6 +20,7 @@
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
     <PackageReference Include="RolandK.AvaloniaExtensions" Version="2.1.0" />
     <PackageReference Include="RolandK.AvaloniaExtensions.DependencyInjection" Version="2.1.0" />
+    <PackageReference Include="RolandK.AvaloniaExtensions.ExceptionHandling" Version="2.1.0" />
     <PackageReference Include="RolandK.InProcessMessaging" Version="1.0.3" />
     <PackageReference Include="YamlDotNet" Version="15.1.2" />
     <PackageReference Include="Avalonia.Svg.Skia" Version="11.0.0.16" />

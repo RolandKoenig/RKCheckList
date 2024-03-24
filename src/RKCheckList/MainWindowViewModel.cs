@@ -95,7 +95,7 @@ public partial class MainWindowViewModel : OwnViewModelBase
                 srvNavigation.NavigateTo<HomeViewModel>();
                 return;
             }
-            
+
             srvNavigation.NavigateTo<CheckListViewModel, CheckListModel>(checkListFile);
         }
     }

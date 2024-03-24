@@ -2,10 +2,10 @@
 using System;
 using System.Text;
 using Microsoft.Extensions.DependencyInjection;
-using RKCheckList.ExceptionViewer;
 using RKCheckList.Services;
 using RKCheckList.Views;
 using RolandK.AvaloniaExtensions.DependencyInjection;
+using RolandK.AvaloniaExtensions.ExceptionHandling;
 using RolandK.InProcessMessaging;
 
 namespace RKCheckList;
@@ -26,8 +26,11 @@ internal class Program
         }
         catch (Exception ex)
         {
-            GlobalErrorReporting.TryShowGlobalExceptionDialogInAnotherProcess(ex, "RKCheckList");
-            return -1;
+            GlobalErrorReporting.TryShowBlockingGlobalExceptionDialogInAnotherProcess(
+                ex, 
+                ".RKCheckList",
+                "RKCheckList.ExceptionViewer");
+            throw;
         }
     }
 
