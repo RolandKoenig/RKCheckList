@@ -34,6 +34,6 @@
     <AvaloniaResource Include="..\..\assets\RKCheckList.svg">
       <Link>Assets/RKCheckList.svg</Link>
     </AvaloniaResource>
-    <AvaloniaResource Include="Assets\RKCheckList.ico" />
+    <AvaloniaResource Include="Assets\*" />
   </ItemGroup>
 </Project>
