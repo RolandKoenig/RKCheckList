@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RKCheckList.Tests", "src\RK
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RKCheckList.ExceptionViewer", "src\RKCheckList.ExceptionViewer\RKCheckList.ExceptionViewer.csproj", "{B261FB4E-C535-41B8-935F-36E5B6221E8C}"
 EndProject
-Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "RKTimeMonitor.WindowsApp", "..\RKTimeMonitor\src\RKTimeMonitor.WindowsApp\RKTimeMonitor.WindowsApp.wapproj", "{28A8D37E-AFB9-40D8-8648-C67057C0E7C3}"
+Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "RKCheckList.WindowsApp", "src\RKCheckList.WindowsApp\RKCheckList.WindowsApp.wapproj", "{28A8D37E-AFB9-40D8-8648-C67057C0E7C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
