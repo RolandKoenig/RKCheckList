@@ -30,7 +30,7 @@ public partial class MainWindowViewModel : OwnViewModelBase
         get
         {
             var strBuilder = new StringBuilder(64);
-            strBuilder.Append("RK CheckList");
+            strBuilder.Append("RolandK CheckList");
 
             var version = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version;
             if (!string.IsNullOrEmpty(version) &&
